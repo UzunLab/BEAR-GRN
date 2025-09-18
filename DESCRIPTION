@@ -1,0 +1,36 @@
+Package: BEARGRN
+Title: Gene Regulatory Network Analysis and Benchmarking using Single cell Multiomics data
+Version: 1.0
+Authors@R: 
+    person("Karamveer", "Karamveer", , "karamveerverma37@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5339-3317"))
+Description: Tools for analyzing and benchmarking gene regulatory networks,
+    including functions for creating ROC and PR curves, evaluating method
+    performance, and generating visualization plots.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends:
+    R (>= 4.0.0)
+Imports: 
+    readr,
+    dplyr,
+    tidyr,
+    pROC,
+    PRROC,
+    ggplot2,
+    stringr,
+    tibble,
+    RColorBrewer,
+    plotrix,
+    scales,
+    purrr,
+    viridis
+Suggests: 
+    testthat (>= 3.0.0),
+    tidyverse,
+    svglite,
+    magrittr,
+    extrafont
+Config/testthat/edition: 3
