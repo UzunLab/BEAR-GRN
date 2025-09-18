@@ -1,10 +1,13 @@
-# GRN Inference Method Benchmark Dataset Collection
-
+# Benchmarking GRN Inference Method using Single-cell Multiomics
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17087863.svg)](https://doi.org/10.5281/zenodo.17087863)
 
-A comprehensive collection of Gene Regulatory Network (GRN) inference results from multiple state-of-the-art methods across various single-cell multiomics datasets, designed for benchmarking and comparative analysis of new GRN inference methods. Available as both downloadable datasets and an R package (BEAR-GRN).
+A comprehensive collection of Gene Regulatory Network (GRN) inference results from multiple state-of-the-art methods across various single-cell multiomics datasets, designed for benchmarking and comparative analysis of new GRN inference methods. Available as both downloadable datasets and an R package (BEAR-GRN). 
+
+  <img width="300" height="300" alt="BEARGRN logo" src="https://github.com/user-attachments/assets/01176d49-ab92-4344-a3de-ce2536f68458" />
+
 
 ## 📊 Dataset Overview
+
 
 This collection contains GRN inference results from **8 established methods** across **7 single-cell datasets**, along with corresponding ground truth regulatory networks for rigorous benchmarking. The dataset includes multiple analysis scripts for comprehensive evaluation of GRN methods and original multiomics data for generating new GRN inferences.
 
@@ -35,8 +38,8 @@ The complete analysis pipeline is available as the **BEAR-GRN** R package, which
 
 ### Included Datasets
 - **K562**: Human chronic myelogenous leukemia cell line
-- **Macrophage_S1**: Mouse macrophage stimulation condition 1
-- **Macrophage_S2**: Mouse macrophage stimulation condition 2  
+- **Macrophage_S1**: Mouse macrophage sample 1
+- **Macrophage_S2**: Mouse macrophage sample 2  
 - **mESC_E7.5_rep1**: Mouse embryonic stem cells E7.5 replicate 1
 - **mESC_E7.5_rep2**: Mouse embryonic stem cells E7.5 replicate 2
 - **mESC_E8.5_rep1**: Mouse embryonic stem cells E8.5 replicate 1
@@ -137,18 +140,31 @@ BEAR-GRN/
 ## 📋 Analysis Functions Overview
 
 This benchmark collection includes four main analysis functions:
+# To reproduce the benchmarking results 
 
-### 1. `benchmark_new_method()` - New Method Benchmarking
-Evaluates new GRN inference methods against existing methods and ground truth.
-
-### 2. `reproduce_ROC_PR_plots()` - ROC/PR Curve Analysis  
+### 1. `reproduce_ROC_PR_plots()` - ROC/PR Curve Analysis  
 Generates comprehensive ROC and Precision-Recall curves for all methods across datasets.
 
-### 3. `reproduce_early_metrics()` - Top-K Edge Analysis
+### 2. `reproduce_early_metrics()` - Top-K Edge Analysis
 Computes precision, recall, and F1-scores using filtered networks (top 10K edges).
 
-### 4. `analyze_network_stability()` - Stability Analysis
-Analyzes network stability across replicates using Jaccard Index.
+### 3. `analyze_network_stability()` - Stability Analysis
+Analyzes network stability across subsamples using Jaccard Index.
+
+# To evaluate a new method against benchmarked methods
+
+### 1. `benchmark_new_method()` - New method ROC/PR Curve Analysis
+Generates comprehensive ROC and Precision-Recall curves for all methods across datasets including new method.
+
+### 2. `benchmark_new_method_early_metrics()` - Early metrics analysis for new method Top-K Edge Analysis
+Computes precision, recall, and F1-scores using filtered networks (top 10K edges) including new method.
+
+### 3. `benchmark_new_method_stability()` - Stability Analysis for New menthod
+Analyzes network stability across subsamples using Jaccard Index including new method.
+
+
+
+
 
 ## 📋 File Formats and Column Structure
 
@@ -172,19 +188,22 @@ Analyzes network stability across replicates using Jaccard Index.
 
 ## 🚀 Installation and Setup
 
-### Option 1: R Package Installation (Recommended)
+### Step 1: R Package Installation (Recommended)
 
 ```r
 # Install BEAR-GRN R package (if available from repository)
 # install.packages("devtools")
-# devtools::install_github("your-repo/BEAR-GRN")
-# library(BEAR.GRN)
+# install.packages("BEARGRN") (install from CRAN)
+#    or
+# devtools::install_github("UzunLab/BEAR-GRN") (Install from Github Repo)
+# devtools::install_github("karamveerverma37/BEAR-GRN") (Install developer version)
+# library(BEARGRN)
 
 # Or install from local source
 # install.packages("path/to/BEAR-GRN", repos = NULL, type = "source")
 ```
 
-### Option 2: Manual Download and Setup
+### Step 2: Data Download and Setup
 
 #### 1. Download Data from Zenodo
 
@@ -249,21 +268,14 @@ wget https://zenodo.org/record/XXXXX/files/INPUT.DATA.STABILITY.zip
 for file in *.zip; do unzip "$file" && rm "$file"; done
 ```
 
-### 3. Load Analysis Functions
+### 3. Load Analysis Functions using BEARGRN
 
 ```r
 # If using R package
-library(BEAR.GRN)
+library(BEARGRN)
 
-# Or load individual functions from downloaded scripts
-source("path/to/BEAR-GRN/R/benchmark_new_method_early_metrics.R")
-source("path/to/BEAR-GRN/R/benchmark_new_method_filtered.R")
-source("path/to/BEAR-GRN/R/benchmark_new_method_stability.R")
-source("path/to/BEAR-GRN/R/reproduce_ROC_PR.R")
-source("path/to/BEAR-GRN/R/reproduce_early_metrics.R")
-source("path/to/BEAR-GRN/R/reproduce_stability.R")
 
-# Load required libraries
+# If installation fails, install required libraries
 required_packages <- c("readr", "dplyr", "pROC", "PRROC", "ggplot2", 
                       "stringr", "tibble", "RColorBrewer", "plotrix",
                       "tidyr", "purrr", "viridis", "scales")
@@ -276,9 +288,9 @@ lapply(required_packages, function(x) {
 })
 ```
 
-## 🧬 Developing New Methods with INPUT.DATA
+## 🧬 Inferring GRN from New Methods with INPUT.DATA
 
-### Using Original Multiomics Data
+### Using Preprocessed Multiomics Data
 
 The `INPUT.DATA` repository contains the preprocessed multiomics datasets used to generate all GRN inferences. This allows you to:
 
@@ -288,172 +300,17 @@ The `INPUT.DATA` repository contains the preprocessed multiomics datasets used t
 
 #### Data Format and Contents
 
-Each dataset directory contains:
-- **scRNA-seq data**: Gene expression count matrices
-- **scATAC-seq data**: Chromatin accessibility peak matrices  
-- **Cell metadata**: Cell type annotations and sample information
-- **Gene metadata**: Gene symbols, coordinates, and regulatory annotations
-- **Peak metadata**: Genomic coordinates and regulatory region annotations
-
-#### Example: Training a New Method
-
-```r
-# Load multiomics data for K562
-load_multiomics_data <- function(dataset_name = "K562", data_dir = "INPUT.DATA") {
-  
-  dataset_path <- file.path(data_dir, dataset_name)
-  
-  # Load scRNA-seq data
-  rna_counts <- readRDS(file.path(dataset_path, "rna_counts.rds"))
-  rna_metadata <- read.csv(file.path(dataset_path, "rna_metadata.csv"))
-  
-  # Load scATAC-seq data  
-  atac_counts <- readRDS(file.path(dataset_path, "atac_counts.rds"))
-  atac_metadata <- read.csv(file.path(dataset_path, "atac_metadata.csv"))
-  
-  # Load regulatory annotations
-  gene_info <- read.csv(file.path(dataset_path, "gene_info.csv"))
-  peak_info <- read.csv(file.path(dataset_path, "peak_info.csv"))
-  
-  return(list(
-    rna = list(counts = rna_counts, metadata = rna_metadata),
-    atac = list(counts = atac_counts, metadata = atac_metadata),
-    genes = gene_info,
-    peaks = peak_info
-  ))
-}
-
-# Example: Use data with your method
-k562_data <- load_multiomics_data("K562")
-
-# Your GRN inference method here
-# my_grn <- your_method(
-#   rna_data = k562_data$rna$counts,
-#   atac_data = k562_data$atac$counts,
-#   gene_info = k562_data$genes,
-#   peak_info = k562_data$peaks
-# )
-
-# Save results in standard format for benchmarking
-# write_tsv(my_grn, "my_method_k562_results.tsv")
-```
-
-#### Data Preprocessing Pipeline
-
-The `inst/scripts/DATA.PREPROCESSING/` directory contains the preprocessing steps:
-
-```r
-# Reproduce the preprocessing pipeline
-source("inst/scripts/DATA.PREPROCESSING/Step1.QC.R")          # Quality control
-source("inst/scripts/DATA.PREPROCESSING/Step2.filter_cells_genes.R")  # Filtering
-source("inst/scripts/DATA.PREPROCESSING/Step3.select_common_cells.R")  # Cell matching
-source("inst/scripts/DATA.PREPROCESSING/Step4.subsample_cells.R")      # Subsampling
-```
+Each dataset directory contains the following data for each method:
+- **scRNA-seq data**: Gene expression count matrices in Gene by Cell format
+- **scATAC-seq data**: Chromatin accessibility peak matrices in Peak by Cell format
 
 ### Generating Stability Data
 
-Use `INPUT.DATA.STABILITY` to create multiple network replicates:
+Use `INPUT.DATA.STABILITY` to create multiple network replicates to benchmark new method for Stability
 
-```r
-# Example: Generate multiple GRN replicates for stability analysis
-generate_stability_networks <- function(dataset_name = "K562", 
-                                       n_replicates = 5,
-                                       data_dir = "INPUT.DATA.STABILITY") {
-  
-  results <- list()
-  
-  for (i in 1:n_replicates) {
-    cat("Generating replicate", i, "of", n_replicates, "\n")
-    
-    # Load replicate data (different cell subsets or bootstrap samples)
-    replicate_data <- load_stability_replicate(dataset_name, replicate = i, data_dir)
-    
-    # Run your method
-    # grn_replicate <- your_method(replicate_data)
-    
-    # Save replicate
-    # output_file <- paste0("my_method_", dataset_name, "_rep", i, ".tsv")
-    # write_tsv(grn_replicate, output_file)
-    
-    # results[[i]] <- grn_replicate
-  }
-  
-  return(results)
-}
+Once you have installed the BEARGRN and have downloaded the inferred GRNs and ground truth GRNs.
+Copy these files to your working directory
 
-# Generate replicates
-# k562_replicates <- generate_stability_networks("K562", n_replicates = 10)
-```
-
-### Reference Method Implementations
-
-The `inst/scripts/GRN.INFERENCE/` directory provides reference implementations for all methods:
-
-#### Available Method Scripts
-- **CellOracle**: `SCRIPT.CELLORACLE`, `run_ATAC_RNA.sh`
-- **DIRECTNET**: `New.R`  
-- **FigR**: `FigR.R`
-- **GRaNIE**: `GRaNIE_singleCell.R`
-- **Pando**: `Pando.R`
-- **SCENIC+**: Available in subdirectory
-- **STREAM**: `STREAM2.R`
-- **TRIPOD**: `TRIPOD_Final.R`, `make_uniq_grn.R`
-- **scGLUE**: `run_all.sh`, `step1_scGLUE.py` to `step4_scGLUE.py`
-
-#### Example: Run Existing Method
-
-```r
-# Example: Run FigR on your data
-source("inst/scripts/GRN.INFERENCE/FigR/FigR.R")
-
-# The script contains the complete pipeline:
-# 1. Data loading and preprocessing
-# 2. Peak-gene linking
-# 3. TF-target prediction  
-# 4. Network scoring and filtering
-
-# Modify the script to use your own data or different parameters
-```
-
-### Complete Workflow: New Method Development
-
-```r
-# Step 1: Develop and test your method
-dataset_name <- "K562"
-input_data <- load_multiomics_data(dataset_name)
-
-# Your method development here
-# new_grn <- develop_new_method(input_data)
-
-# Step 2: Generate network for benchmarking  
-# write_tsv(new_grn, paste0("MyMethod_", dataset_name, ".tsv"))
-
-# Step 3: Generate stability replicates (optional)
-# stability_networks <- generate_stability_networks(dataset_name, n_replicates = 10)
-
-# Step 4: Benchmark against existing methods
-benchmark_results <- benchmark_new_method_early_metrics(
-  new_grn_file = paste0("MyMethod_", dataset_name, ".tsv"),
-  dataset_name = dataset_name,
-  tf_column = "TF",
-  target_column = "Gene", 
-  score_column = "Score",
-  method_name = "MyMethod",
-  input_dir = "INFERRED.GRNS",
-  ground_truth_dir = "GROUND.TRUTHS"
-)
-
-# Step 5: Assess stability (if replicates available)
-# stability_results <- benchmark_new_method_stability(
-#   base_dir = "STABILITY_GRNS",
-#   sample_dirs = dataset_name,
-#   methods = c("CellOracle", "FigR"),
-#   method_name = "MyMethod", 
-#   grn_dir = "path/to/stability/replicates"
-# )
-
-print(benchmark_results$ranking)
-```
 
 ## 📊 Analysis Examples
 
@@ -557,12 +414,11 @@ results <- benchmark_new_method_stability(
 #### Example 4: Generate ROC and PR Curves for All Methods
 
 ```r
-# Generate comprehensive ROC and PR curves
+# Generate comprehensive ROC and PR curves 
 roc_pr_results <- reproduce_ROC_PR_plots(
-  input_dir = "DATASETS",
+  input_dir = "INFERRED.GRNS",
   output_dir = "ROC_PR_Results",
-  ground_truth_dir = "GROUND_TRUTHS",
-  use_filtered_approach = TRUE
+  ground_truth_dir = "GROUND.TRUTHS"
 )
 
 # Access results for specific dataset
@@ -575,9 +431,9 @@ print(k562_results$results)  # Performance metrics
 ```r
 # Compute precision/recall/F1 for filtered networks (top 10K edges)
 metrics_results <- reproduce_early_metrics(
-  input_dir = "DATASETS",
+  input_dir = "INFERRED.GRNS",
   output_dir = "filtered_metrics_results",
-  ground_truth_dir = "GROUND_TRUTHS",
+  ground_truth_dir = "GROUND.TRUTHS",
   max_edges = 10000
 )
 
@@ -781,6 +637,34 @@ The analysis functions calculate:
 - **Median JI**: Median Jaccard Index across all pairwise comparisons
 - **Top vs Random**: Comparison of stability in top-ranked vs random edges
 
+### Reference Method Implementations
+# If users want to infer GRNs using other dataset we provide the script used for 10 GRN inference methods (Note: Requires many dependency installation)
+The `inst/scripts/GRN.INFERENCE/` directory provides reference implementations for all methods:
+
+#### Available Method Scripts
+- **CellOracle**: `SCRIPT.CELLORACLE`, `run_ATAC_RNA.sh`
+- **DIRECTNET**: `New.R`
+- **FigR**: `FigR.R`
+- **GRaNIE**: `GRaNIE_singleCell.R`
+- **Pando**: `Pando.R`
+- **SCENIC+**:
+- **LINGER**:
+- **STREAM**: `STREAM2.R`
+- **TRIPOD**: `TRIPOD_Final.R`, `make_uniq_grn.R`
+- **scGLUE**: `run_all.sh`, `step1_scGLUE.py` to `step4_scGLUE.py`
+
+#### Data Preprocessing Pipeline
+# If users want to use their own data for GRN inference the data can be processed using the following scripts/parameters
+The `inst/scripts/DATA.PREPROCESSING/` directory contains the scripts used for raw multiomic data preprocessing:
+
+```r
+# Reproduce the preprocessing pipeline
+source("inst/scripts/DATA.PREPROCESSING/Step1.QC.R")          # Quality control
+source("inst/scripts/DATA.PREPROCESSING/Step2.filter_cells_genes.R")  # Filtering
+source("inst/scripts/DATA.PREPROCESSING/Step3.select_common_cells.R")  # Cell matching
+source("inst/scripts/DATA.PREPROCESSING/Step4.subsample_cells.R")      # Subsampling
+```
+
 ## 🔧 Requirements
 
 ### R Version
@@ -809,9 +693,9 @@ install.packages(c(
 
 Ground truth regulatory networks are derived from:
 - ChIP-seq experiments
-- Perturbation studies  
-- Literature-curated databases
-- Experimental validation studies
+- BEELINE  
+- Literature-curated databases (ChIP-Atlas, ESCAPE, ENCODE, CistromeDB)
+- Experimental knockout validation studies (KnockDB, ESCAPE)
 
 Each ground truth file contains high-confidence regulatory interactions specific to the cell type and experimental condition.
 
@@ -819,38 +703,17 @@ Each ground truth file contains high-confidence regulatory interactions specific
 
 ### For New Method Developers
 
-#### Complete Evaluation Workflow
-1. **Start with `benchmark_new_method_early_metrics()`** to get practical performance metrics (P/R/F1) and method ranking
-2. **Use `benchmark_new_method()`** for comprehensive ROC/PR curve analysis and AUROC/AUPRC comparison
-3. **Apply `benchmark_new_method_stability()`** if you have multiple network replicates to assess reproducibility
-4. **Use `debug_network_files()`** if you encounter file reading issues
-
-#### Quick Assessment Workflow  
-1. **`benchmark_new_method_early_metrics()`** - Fast evaluation with clear ranking
-2. **`benchmark_new_method()`** - Detailed performance curves if needed
-
-### For Comparative Studies
-
-#### Comprehensive Analysis
+### Complete Evaluation Workflow
+#### Existing Method Assessment
 1. **Use `reproduce_ROC_PR_plots()`** for comprehensive method comparison across all datasets
 2. **Apply `reproduce_early_metrics()`** for practical performance assessment with lollipop visualizations
 3. **Combine with `analyze_network_stability()`** for robustness evaluation across methods
 
-#### Focused Analysis
-1. **Start with filtered metrics** (`reproduce_early_metrics()`) for practical insights
-2. **Examine ROC/PR curves** (`reproduce_ROC_PR_plots()`) for detailed performance characteristics
-
-### For Method Validation
-
-#### New Method Validation
-1. **Benchmark against existing methods** using `benchmark_new_method_early_metrics()` for quick validation
-2. **Detailed curve analysis** with `benchmark_new_method()` for publication-quality results  
-3. **Stability assessment** with `benchmark_new_method_stability()` for reproducibility claims
-
-#### Existing Method Assessment
-1. **Start with filtered metrics** to understand practical performance on top edges
-2. **Examine ROC/PR curves** for detailed performance characteristics
-3. **Assess stability** across replicates to ensure reproducibility
+#### For New Method Developers
+1. **Start with `benchmark_new_method_early_metrics()`** to get practical performance metrics (P/R/F1) and method ranking
+2. **Use `benchmark_new_method()`** for comprehensive ROC/PR curve analysis and AUROC/AUPRC comparison
+3. **Apply `benchmark_new_method_stability()`** if you have multiple network replicates to assess reproducibility
+4. **Use `debug_network_files()`** if you encounter file reading issues
 
 ### Function Selection Guide
 
@@ -889,29 +752,6 @@ If you use this benchmark collection or the BEAR-GRN package in your research, p
 }
 ```
 
-### Individual Data Repository Citations
-
-If using specific data repositories, please cite:
-
-```bibtex
-@dataset{inferred_grns_2024,
-  title={Pre-computed Gene Regulatory Network Inference Results},
-  publisher={Zenodo},
-  doi={10.5281/zenodo.XXXXX}
-}
-
-@dataset{input_data_2024,
-  title={Multiomics Input Data for GRN Inference},
-  publisher={Zenodo}, 
-  doi={10.5281/zenodo.XXXXX}
-}
-
-@dataset{stability_data_2024,
-  title={Gene Regulatory Network Stability Analysis Data},
-  publisher={Zenodo},
-  doi={10.5281/zenodo.XXXXX}
-}
-```
 
 ## 🌟 Complete Ecosystem Overview
 
