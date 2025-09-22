@@ -214,15 +214,15 @@ download_grn_data <- function(data_dir = "GRN_BENCHMARK_DATA") {
   # Create main directory
   dir.create(data_dir, showWarnings = FALSE, recursive = TRUE)
   
-  # Zenodo repository URLs (update with actual DOIs)
+  # Zenodo repository URLs (INPUT DATA is only required for GRN inference from new method)
   zenodo_files <- list(
-    "INFERRED.GRNS" = "https://zenodo.org/record/XXXXX/files/INFERRED.GRNS.zip",
-    "GROUND.TRUTHS" = "https://zenodo.org/record/XXXXX/files/GROUND.TRUTHS.zip", 
-    "STABILITY_GRNS" = "https://zenodo.org/record/XXXXX/files/STABILITY_GRNS.zip",
-    "INPUT.DATA" = "https://zenodo.org/record/XXXXX/files/INPUT.DATA.zip",
-    "INPUT.DATA.STABILITY" = "https://zenodo.org/record/XXXXX/files/INPUT.DATA.STABILITY.zip"
+    "INFERRED.GRNS" = "https://zenodo.org/records/17087863/files/INFERRED.GRNS.zip",
+    "GROUND.TRUTHS" = "https://zenodo.org/records/17087863/files/GROUND.TRUTHS.zip", 
+    "STABILITY_GRNS" = "https://zenodo.org/records/17087863/files/STABILITY_GRNS.zip",
+    "INPUT.DATA" = "https://zenodo.org/records/17087863/files/INPUT.DATA.zip",
+    "INPUT.DATA.STABILITY" = "https://zenodo.org/records/17087863/files/INPUT.DATA.STABILITY.zip"
   )
-  
+
   # Download and extract each dataset
   for (dataset_name in names(zenodo_files)) {
     cat("Downloading", dataset_name, "...\n")
@@ -257,12 +257,13 @@ data_dir <- download_grn_data("GRN_BENCHMARK_DATA")
 #### 2. Manual Download Alternative
 
 ```bash
-# Download directly using wget or curl
-wget https://zenodo.org/record/XXXXX/files/INFERRED.GRNS.zip
-wget https://zenodo.org/record/XXXXX/files/GROUND.TRUTHS.zip
-wget https://zenodo.org/record/XXXXX/files/STABILITY_GRNS.zip
-wget https://zenodo.org/record/XXXXX/files/INPUT.DATA.zip
-wget https://zenodo.org/record/XXXXX/files/INPUT.DATA.STABILITY.zip
+# Download directly using wget or curl (INPUT DATA is only required for GRN inference using new method)
+wget https://zenodo.org/records/17087863/files/INFERRED.GRNS.zip
+wget https://zenodo.org/records/17087863/files/GROUND.TRUTHS.zip
+wget https://zenodo.org/records/17087863/files/STABILITY_GRNS.zip
+wget https://zenodo.org/records/17087863/files/INPUT.DATA.zip
+wget https://zenodo.org/records/17087863/files/INPUT.DATA.STABILITY.zip
+wget https://zenodo.org/records/17087863/files/GENOME_AND_ANNOTATION.zip
 
 # Extract all files
 for file in *.zip; do unzip "$file" && rm "$file"; done
@@ -746,9 +747,9 @@ If you use this benchmark collection or the BEAR-GRN package in your research, p
 ```bibtex
 @software{bear_grn_2024,
   title={BEAR-GRN: Benchmarking and Evaluation of Automated Regulatory Gene Networks},
-  author={Your Name and Collaborators},
+  author={Karamveer Karamveer and Yasin Uzun},
   year={2024},
-  url={https://github.com/your-repo/BEAR-GRN}
+  url={https://github.com/UzunLab/BEAR-GRN}
 }
 ```
 
@@ -1099,4 +1100,5 @@ Check that your method's column names match the expected format in the method-sp
 
 #### Empty Results  
 Ensure ground truth files exist and contain the expected `Source` and `Target` columns.
+
 
