@@ -191,15 +191,15 @@ Analyzes network stability across subsamples using Jaccard Index including new m
 ### Step 1: R Package Installation (Recommended)
 
 ```r
-# Install BEAR-GRN R package (if available from repository)
-# install.packages("devtools")
-# install.packages("BEARGRN") (install from CRAN)
-#    or
-# devtools::install_github("UzunLab/BEAR-GRN") (Install from Github Repo)
-# devtools::install_github("karamveerverma37/BEAR-GRN") (Install developer version)
-# library(BEARGRN)
+# Install BEAR-GRN R package 
+install.packages("devtools")
+devtools::install_github("UzunLab/BEAR-GRN") (Install from Github Repo)
+# or
+devtools::install_github("karamveerverma37/BEAR-GRN") (Install developer version)
 
-# Or install from local source
+library(BEARGRN)
+
+# Or download and install from local source
 # install.packages("path/to/BEAR-GRN", repos = NULL, type = "source")
 ```
 
@@ -648,8 +648,8 @@ The `inst/scripts/GRN.INFERENCE/` directory provides reference implementations f
 - **FigR**: `FigR.R`
 - **GRaNIE**: `GRaNIE_singleCell.R`
 - **Pando**: `Pando.R`
-- **SCENIC+**:
-- **LINGER**:
+- **SCENIC+**: https://github.com/emoeller80281/SCENIC_PLUS ; https://github.com/emoeller80281/scenicplus_src
+- **LINGER**: https://github.com/emoeller80281/LINGER
 - **STREAM**: `STREAM2.R`
 - **TRIPOD**: `TRIPOD_Final.R`, `make_uniq_grn.R`
 - **scGLUE**: `run_all.sh`, `step1_scGLUE.py` to `step4_scGLUE.py`
