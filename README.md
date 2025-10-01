@@ -486,7 +486,7 @@ roc_pr_results <- benchmark_new_method(
   tf_column = "TF",
   target_column = "Target", 
   score_column = "Confidence",
-  input_dir = "DATASETS",
+  input_dir = "INFERRED.GRNS",
   output_dir = paste0(new_method, "_ROC_PR_Benchmark")
 )
 
@@ -499,7 +499,7 @@ prf_results <- benchmark_new_method_early_metrics(
   target_column = "Target",
   score_column = "Confidence",
   method_name = new_method,
-  input_dir = "DATASETS",
+  input_dir = "INFERRED.GRNS",
   output_dir = paste0(new_method, "_PRF_Evaluation")
 )
 
