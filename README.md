@@ -315,6 +315,7 @@ Copy these files to your working directory
 
 ## 📊 Analysis Examples
 
+
 ### New Method Benchmarking Examples
 
 #### Example 1: ROC/PR Curve Benchmarking
@@ -328,9 +329,9 @@ results <- benchmark_new_method(
   tf_column = "TF",              # Your TF column name
   target_column = "Gene",        # Your target gene column name  
   score_column = "Confidence",   # Your confidence/score column name
-  input_dir = "DATASETS",
+  input_dir = "INFERRED.GRNS",
   output_dir = "benchmark_results",
-  ground_truth_dir = "GROUND_TRUTHS"
+  ground_truth_dir = "GROUND.TRUTHS"
 )
 
 # View performance summary
@@ -354,7 +355,7 @@ results <- benchmark_new_method_early_metrics(
   target_column = "Gene",
   score_column = "Weight",       # Can be NULL if no scores
   method_name = "MyMethod",
-  input_dir = "DATASETS",
+  input_dir = "INFERRED.GRNS",
   output_dir = "my_evaluation",
   max_edges = 10000
 )
