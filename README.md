@@ -163,7 +163,7 @@ Computes precision, recall, and F1-scores using filtered networks (top 10K edges
 Analyzes network stability across subsamples using Jaccard Index including new method.
 
 #### Note: The TF, Target or Score columns should not have quotation around it.
-You can use sed -i 's/"//g' GRNfile.csv in bash to remove quotation
+You can use `sed -i 's/"//g' GRNfile.csv` in bash to remove quotation
 
 
 
