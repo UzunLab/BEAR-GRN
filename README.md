@@ -9,7 +9,7 @@ A comprehensive collection of Gene Regulatory Network (GRN) inference results fr
 ## 📊 Dataset Overview
 
 
-This collection contains GRN inference results from **8 established methods** across **7 single-cell datasets**, along with corresponding ground truth regulatory networks for rigorous benchmarking. The dataset includes multiple analysis scripts for comprehensive evaluation of GRN methods and original multiomics data for generating new GRN inferences.
+This collection contains GRN inference results from **8 established methods** across **8 single-cell datasets**, along with corresponding ground truth regulatory networks for rigorous benchmarking. The dataset includes multiple analysis scripts for comprehensive evaluation of GRN methods and original multiomics data for generating new GRN inferences.
 
 ### Available Data Repositories on Zenodo
 
@@ -38,8 +38,9 @@ The complete analysis pipeline is available as the **BEAR-GRN** R package, which
 
 ### Included Datasets
 - **K562**: Human chronic myelogenous leukemia cell line
-- **Macrophage_S1**: Mouse macrophage sample 1
-- **Macrophage_S2**: Mouse macrophage sample 2  
+- **Macrophage_S1**: Human macrophage sample 1
+- **Macrophage_S2**: Human macrophage sample 2  
+- **iPSC**: Human induced pluripotent stem cells
 - **mESC_E7.5_rep1**: Mouse embryonic stem cells E7.5 replicate 1
 - **mESC_E7.5_rep2**: Mouse embryonic stem cells E7.5 replicate 2
 - **mESC_E8.5_rep1**: Mouse embryonic stem cells E8.5 replicate 1
@@ -58,6 +59,7 @@ INFERRED.GRNS/                          # Pre-computed GRN results
 │   └── [other methods...]
 ├── Macrophage_S1/
 ├── Macrophage_S2/
+├── iPS/
 ├── mESC_E7.5_rep1/
 ├── mESC_E7.5_rep2/
 ├── mESC_E8.5_rep1/
@@ -66,6 +68,8 @@ INFERRED.GRNS/                          # Pre-computed GRN results
 GROUND.TRUTHS/                          # Experimental validation data
 ├── filtered_RN117_K562.tsv
 ├── filtered_RN204_Buffer1.tsv
+├── filtered_RN204_Buffer2.tsv
+├── filtered_RN000_iPS.tsv
 ├── filtered_RN111_E7.5_rep1.tsv
 ├── filtered_RN111_E7.5_rep2.tsv
 ├── filtered_RN111_E8.5_rep1.tsv
