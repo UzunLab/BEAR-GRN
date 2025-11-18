@@ -103,10 +103,11 @@ reproduce_early_metrics <- function(input_dir,
   }
   
   # Dataset to ground truth mapping
+  #Updated the Mac2 GT
   datasets_mapping <- list(
     "K562" = "filtered_RN117_K562.tsv",
     "Macrophage_S1" = "filtered_RN204_Buffer1.tsv",
-    "Macrophage_S2" = "filtered_RN204_Buffer1.tsv",
+    "Macrophage_S2" = "filtered_RN204_Buffer2.tsv",
     "mESC_E7.5_rep1" = "filtered_RN111_E7.5_rep1.tsv",
     "mESC_E7.5_rep2" = "filtered_RN111_E7.5_rep2.tsv",
     "mESC_E8.5_rep1" = "filtered_RN111_E8.5_rep1.tsv",
@@ -114,7 +115,8 @@ reproduce_early_metrics <- function(input_dir,
     "E7.5_rep1" = "filtered_RN111_E7.5_rep1.tsv",
     "E7.5_rep2" = "filtered_RN111_E7.5_rep2.tsv",
     "E8.5_rep1" = "filtered_RN111_E8.5_rep1.tsv",
-    "E8.5_rep2" = "filtered_RN111_E8.5_rep2.tsv"
+    "E8.5_rep2" = "filtered_RN111_E8.5_rep2.tsv",
+    "iPS" = "filtered_RN000_iPS.tsv"
   )
   
   # Auto-detect datasets from input directory
@@ -346,7 +348,7 @@ reproduce_early_metrics <- function(input_dir,
   #dataset_order <- unique(plot_data$Dataset)
   #plot_data$Dataset <- factor(plot_data$Dataset, levels = dataset_order)
   # Set custom dataset order
-  desired_order <- c("Macrophage_S1", "Macrophage_S2", "K562", "E7.5_rep1", "E7.5_rep2", "E8.5_rep1", "E8.5_rep2")
+  desired_order <- c("Macrophage_S1", "Macrophage_S2", "K562", "iPS", "E7.5_rep1", "E7.5_rep2", "E8.5_rep1", "E8.5_rep2")
   available_datasets <- unique(plot_data$Dataset)
   dataset_order <- intersect(desired_order, available_datasets)
   plot_data$Dataset <- factor(plot_data$Dataset, levels = dataset_order)
@@ -373,7 +375,7 @@ reproduce_early_metrics <- function(input_dir,
     
     # Compute dynamic y-axis limit with 10% buffer, capped at 1
     max_score <- max(df_metric$Score, na.rm = TRUE)
-    y_limit <- min(1, max(0.1, round(max_score * 1.1, 2)))
+    y_limit <- min(1, max(0.02, round(max_score * 1.1, 4)))
     
     p_lollipop <- ggplot(df_metric, aes(x = Dataset, y = Score)) +
       geom_segment(
@@ -387,14 +389,14 @@ reproduce_early_metrics <- function(input_dir,
         aes(color = Method),
         shape = 16,
         position = position_dodge(width = 0.8),
-        size = 4.5,
+        size = 6,
         alpha = 0.9
       ) +
       scale_color_manual(values = method_colors) +
       scale_y_continuous(
         limits = c(0, y_limit),
         expand = expansion(mult = c(0, 0.02)),
-        labels = scales::number_format(accuracy = 0.01)
+        labels = scales::number_format(accuracy = 0.001)
       ) +
       scale_x_discrete(expand = expansion(add = c(1.5, 1.5))) +
       labs(

@@ -90,11 +90,12 @@ reproduce_ROC_PR_plots <- function(input_dir,
   datasets <- list(
     "K562" = "filtered_RN117_K562.tsv",
     "Macrophage_S1" = "filtered_RN204_Buffer1.tsv",
-    "Macrophage_S2" = "filtered_RN204_Buffer1.tsv",
+    "Macrophage_S2" = "filtered_RN204_Buffer2.tsv",
     "mESC_E7.5_rep1" = "filtered_RN111_E7.5_rep1.tsv",
     "mESC_E7.5_rep2" = "filtered_RN111_E7.5_rep2.tsv",
     "mESC_E8.5_rep1" = "filtered_RN111_E8.5_rep1.tsv",
-    "mESC_E8.5_rep2" = "filtered_RN111_E8.5_rep2.tsv"
+    "mESC_E8.5_rep2" = "filtered_RN111_E8.5_rep2.tsv",
+    "iPS" = "filtered_RN000_iPS.tsv"
   )
   
   # Helper functions
@@ -374,7 +375,8 @@ reproduce_ROC_PR_plots <- function(input_dir,
     
     # Save plots
     ggsave(file.path(dataset_output_dir, "ROC_plot.png"), plot = roc_plot, width = 8, height = 6, dpi = 300)
-    ggsave(file.path(dataset_output_dir, "ROC_plot.pdf"), plot = roc_plot, width = 8, height = 6)
+    ggsave(file.path(dataset_output_dir, "ROC_plot.pdf"), plot = roc_plot, width = 8, height = 6, device = "pdf")
+    ggsave(file.path(dataset_output_dir, "ROC_plot.eps"), plot = roc_plot, width = 8, height = 6, device = "eps")
     
     # Create PR gap plot
     create_pr_gap_plot(combined_pr = combined_pr, results = results, method_colors = method_colors,
