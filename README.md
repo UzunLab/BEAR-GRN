@@ -678,6 +678,13 @@ source("inst/scripts/DATA.PREPROCESSING/Step4.subsample_cells.R")      # Subsamp
 ### R Version
 - R ≥ 4.0.0
 
+### Installation time
+- ~60 seconds
+
+### Run time
+- Accuracy: ~5 minutes
+- Stability: ~10 minutes
+
 ### Required R Packages
 ```r
 install.packages(c(
