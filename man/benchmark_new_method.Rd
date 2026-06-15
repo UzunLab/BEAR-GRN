@@ -64,7 +64,7 @@ results <- benchmark_new_method(
 
 # Benchmark against specific existing methods
 results <- benchmark_new_method(
-  dataset_name = "mESC_E7.5_rep1",
+  dataset_name = "E7.5_rep1",
   new_grn_file = "my_grn_inference.csv",
   new_method_name = "NovelGRN",
   tf_column = "source_tf",
