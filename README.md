@@ -1,5 +1,5 @@
 # Benchmarking GRN Inference Method using Single-cell Multiomics
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17087863.svg)](https://doi.org/10.5281/zenodo.17087863)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20704929.svg)](https://doi.org/10.5281/zenodo.20704929)
 
 A comprehensive collection of Gene Regulatory Network (GRN) inference results from multiple state-of-the-art methods across various single-cell multiomics datasets, designed for benchmarking and comparative analysis of new GRN inference methods. Available as both downloadable datasets and an R package (BEAR-GRN). 
 
@@ -29,7 +29,8 @@ The complete analysis pipeline is available as the **BEAR-GRN** R package, which
 ### Included Methods
 - **CellOracle**: Dynamic GRN inference from scRNA-seq
 - **SCENIC+**: Multi-omics GRN inference (extension of Single-Cell rEgulatory Network Inference and Clustering)
-- **Pando**: Lineage-informed GRN reconstruction
+- **Pando-GLM**: Lineage-informed GRN reconstruction
+- **Pando-XGB**: Lineage-informed GRN reconstruction
 - **LINGER**: Lifelong learning for GRN inference
 - **FigR**: Functional inference of gene regulation
 - **TRIPOD**: Three-step regulatory network inference
@@ -45,6 +46,8 @@ The complete analysis pipeline is available as the **BEAR-GRN** R package, which
 - **mESC_E7.5_rep2**: Mouse embryonic stem cells E7.5 replicate 2
 - **mESC_E8.5_rep1**: Mouse embryonic stem cells E8.5 replicate 1
 - **mESC_E8.5_rep2**: Mouse embryonic stem cells E8.5 replicate 2
+
+- **Naive_mESC**: Naive mouse embryonic stem cells (Unpaired dataset*)
 
 ## 📁 Directory Structure
 
@@ -64,6 +67,7 @@ INFERRED.GRNS/                          # Pre-computed GRN results
 ├── mESC_E7.5_rep2/
 ├── mESC_E8.5_rep1/
 └── mESC_E8.5_rep2/
+└── Naive_mESC/
 
 GROUND.TRUTHS/                          # Experimental validation data
 ├── filtered_RN117_K562.tsv
@@ -74,6 +78,7 @@ GROUND.TRUTHS/                          # Experimental validation data
 ├── filtered_RN111_E7.5_rep2.tsv
 ├── filtered_RN111_E8.5_rep1.tsv
 └── filtered_RN111_E8.5_rep2.tsv
+└── filtered_RN111_Naive_mESC.tsv
 
 STABILITY_GRNS/                         # Multiple replicates for stability
 ├── K562/
@@ -98,7 +103,7 @@ BEAR-GRN/
 │   ├── benchmark_new_method_early_metrics.R
 │   ├── benchmark_new_method_filtered.R
 │   ├── benchmark_new_method_stability.R
-│   ├── reproduce_ROC_PR.R
+│   ├── reproduce_ROC_PR_full.R
 │   ├── reproduce_early_metrics.R
 │   └── reproduce_stability.R
 ├── man/                                # Function documentation
@@ -180,7 +185,8 @@ You can use `sed -i 's/"//g' GRNfile.csv` in bash to remove quotation
 |--------|-----------|---------------|--------------|-------------|
 | CellOracle | `source` | `target` | `coef_mean` | CSV |
 | SCENIC+ | `Source` | `Target` | `Score` | TSV |
-| Pando | `tf` | `target` | `estimate` | CSV |
+| Pando-GLM | `tf` | `target` | `estimate` | CSV |
+| Pando-XGB | `tf` | `target` | `corr` | CSV |
 | LINGER | `Source` | `Target` | `Score` | TSV |
 | FigR | `Motif` | `DORC` | `Score` | CSV |
 | TRIPOD | `TF` | `gene` | `abs_coef` | CSV |
@@ -222,11 +228,11 @@ download_grn_data <- function(data_dir = "GRN_BENCHMARK_DATA") {
   
   # Zenodo repository URLs (INPUT DATA is only required for GRN inference from new method)
   zenodo_files <- list(
-    "INFERRED.GRNS" = "https://zenodo.org/records/17087863/files/INFERRED.GRNS.zip",
-    "GROUND.TRUTHS" = "https://zenodo.org/records/17087863/files/GROUND.TRUTHS.zip", 
-    "STABILITY_GRNS" = "https://zenodo.org/records/17087863/files/STABILITY_GRNS.zip",
-    "INPUT.DATA" = "https://zenodo.org/records/17087863/files/INPUT.DATA.zip",
-    "INPUT.DATA.STABILITY" = "https://zenodo.org/records/17087863/files/INPUT.DATA.STABILITY.zip"
+    "INFERRED.GRNS" = "https://zenodo.org/records/20704929/files/INFERRED.GRNS.zip",
+    "GROUND.TRUTHS" = "https://zenodo.org/records/20704929/files/GROUND.TRUTHS.zip", 
+    "STABILITY_GRNS" = "https://zenodo.org/records/20704929/files/STABILITY_GRNS.zip",
+    "INPUT.DATA" = "https://zenodo.org/records/20704929/files/INPUT.DATA.zip",
+    "INPUT.DATA.STABILITY" = "https://zenodo.org/records/20704929/files/INPUT.DATA.STABILITY.zip"
   )
 
   # Download and extract each dataset
@@ -264,12 +270,12 @@ data_dir <- download_grn_data("GRN_BENCHMARK_DATA")
 
 ```bash
 # Download directly using wget or curl (INPUT DATA is only required for GRN inference using new method)
-wget https://zenodo.org/records/17087863/files/INFERRED.GRNS.zip
-wget https://zenodo.org/records/17087863/files/GROUND.TRUTHS.zip
-wget https://zenodo.org/records/17087863/files/STABILITY_GRNS.zip
-wget https://zenodo.org/records/17087863/files/INPUT.DATA.zip
-wget https://zenodo.org/records/17087863/files/INPUT.DATA.STABILITY.zip
-wget https://zenodo.org/records/17087863/files/GENOME_AND_ANNOTATION.zip
+wget https://zenodo.org/records/20704929/files/INFERRED.GRNS.zip
+wget https://zenodo.org/records/20704929/files/GROUND.TRUTHS.zip
+wget https://zenodo.org/records/20704929/files/STABILITY_GRNS.zip
+wget https://zenodo.org/records/20704929/files/INPUT.DATA.zip
+wget https://zenodo.org/records/20704929/files/INPUT.DATA.STABILITY.zip
+wget https://zenodo.org/records/20704929/files/GENOME_AND_ANNOTATION.zip
 
 # Extract all files
 for file in *.zip; do unzip "$file" && rm "$file"; done
@@ -423,7 +429,7 @@ results <- benchmark_new_method_stability(
 
 ```r
 # Generate comprehensive ROC and PR curves 
-roc_pr_results <- reproduce_ROC_PR_plots(
+roc_pr_results <- reproduce_ROC_PR_plots_full_space(
   input_dir = "INFERRED.GRNS",
   output_dir = "ROC_PR_Results",
   ground_truth_dir = "GROUND.TRUTHS"
@@ -654,7 +660,8 @@ The `inst/scripts/GRN.INFERENCE/` directory provides reference implementations f
 - **DIRECTNET**: `New.R`
 - **FigR**: `FigR.R`
 - **GRaNIE**: `GRaNIE_singleCell.R`
-- **Pando**: `Pando.R`
+- **Pando-glm**: `Pando.R`
+- **Pando_xgb**: `Pando_xgb.R`
 - **SCENIC+**: https://github.com/emoeller80281/SCENIC_PLUS ; https://github.com/emoeller80281/scenicplus_src
 - **LINGER**: https://github.com/emoeller80281/LINGER
 - **STREAM**: `STREAM2.R`
@@ -677,13 +684,6 @@ source("inst/scripts/DATA.PREPROCESSING/Step4.subsample_cells.R")      # Subsamp
 
 ### R Version
 - R ≥ 4.0.0
-
-### Installation time
-- ~60 seconds
-
-### Run time
-- Accuracy: ~5 minutes
-- Stability: ~10 minutes
 
 ### Required R Packages
 ```r
@@ -752,8 +752,8 @@ If you use this benchmark collection or the BEAR-GRN package in your research, p
   author={Your Name and Collaborators},
   year={2024},
   publisher={Zenodo},
-  doi={10.5281/zenodo.17087863},
-  url={https://doi.org/10.5281/zenodo.17087863}
+  doi={10.5281/zenodo.20704929},
+  url={https://doi.org/10.5281/zenodo.20704929}
 }
 ```
 
