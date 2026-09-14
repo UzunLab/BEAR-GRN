@@ -42,10 +42,10 @@ The complete analysis pipeline is available as the **BEAR-GRN** R package, which
 - **Macrophage_S1**: Human macrophage sample 1
 - **Macrophage_S2**: Human macrophage sample 2  
 - **iPSC**: Human induced pluripotent stem cells
-- **mESC_E7.5_rep1**: Mouse embryonic stem cells E7.5 replicate 1
-- **mESC_E7.5_rep2**: Mouse embryonic stem cells E7.5 replicate 2
-- **mESC_E8.5_rep1**: Mouse embryonic stem cells E8.5 replicate 1
-- **mESC_E8.5_rep2**: Mouse embryonic stem cells E8.5 replicate 2
+- **Mouse_Embryo_E7.5_rep1**: Early mouse embryonic cells E7.5 replicate 1
+- **Mouse_Embryo_E7.5_rep2**: Early mouse embryonic cells E7.5 replicate 2
+- **Mouse_Embryo_E8.5_rep1**: Early mouse embryonic cells E8.5 replicate 1
+- **Mouse_Embryo_E8.5_rep2**: Early mouse embryonic cells E8.5 replicate 2
 
 - **Naive_mESC**: Naive mouse embryonic stem cells (Unpaired dataset*)
 
